@@ -1,3 +1,6 @@
+pub mod matter;
+
+use crate::matter::Atom;
 use std::fs;
 
 fn main() {
@@ -7,13 +10,6 @@ fn main() {
     let atoms: Vec<Atom> = parse_xyz(&content).unwrap();
 
     println!("Read {} atoms", atoms.len());
-}
-
-struct Atom {
-    element: String,
-    x: f64,
-    y: f64,
-    z: f64,
 }
 
 fn parse_xyz(content: &str) -> Option<Vec<Atom>> {

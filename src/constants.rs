@@ -1,4 +1,4 @@
-use periodic_table::{Element, periodic_table};
+use periodic_table::{periodic_table, Element};
 use phf::phf_map;
 
 fn capitalize_first(s: &str) -> String {
@@ -12,10 +12,12 @@ pub fn get_element(symbol: &str) -> Option<&Element> {
         symbol_ = capitalize_first(symbol);
     }
 
-    if !ATOM_INDEX.contains_key(&symbol_) { return None; }
+    if !ATOM_INDEX.contains_key(&symbol_) {
+        return None;
+    }
     let index = ATOM_INDEX.get(symbol)?;
     let periodic_table = periodic_table();
-    Some(periodic_table[index-1])
+    Some(periodic_table[index - 1])
 }
 
 static ATOM_INDEX: phf::Map<&'static str, usize> = phf_map! {

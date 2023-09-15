@@ -1,11 +1,9 @@
 extern crate nalgebra as na;
 
-pub mod constants;
-pub mod matter;
-
-use crate::constants::get_element;
-use crate::matter::get_fragment_indices;
-use crate::matter::Atom;
+use chizmo::constants::get_element;
+use chizmo::matter::get_fragments;
+use chizmo::matter::Atom;
+use chizmo::parse_xyz;
 use std::fs;
 
 fn main() {
@@ -20,29 +18,12 @@ fn main() {
 
     println!("H name {}", hydrogen.name);
 
-    let indices = get_fragment_indices(&atoms);
+    let indices = get_fragments(&atoms);
     for frag in indices {
         println!("-------");
-        for ind in frag {
-            println!("{}{}", atoms[ind].element, ind);
+        for atom in frag {
+            println!("{:<2} {: >7.3} {: >7.3} {: >7.3}", atom.element, atom.x, atom.y, atom.z);
         }
     }
 }
 
-fn parse_xyz(content: &str) -> Option<Vec<Atom>> {
-    let lines = content.lines();
-
-    let mut atoms = Vec::new();
-    for line in lines {
-        let parts: Vec<&str> = line.split_whitespace().collect();
-        if parts.len() != 4 {
-            continue;
-        }
-        let element = parts[0].to_string();
-        let x = parts[1].parse::<f64>().ok()?;
-        let y = parts[2].parse::<f64>().ok()?;
-        let z = parts[3].parse::<f64>().ok()?;
-        atoms.push(Atom { element, x, y, z });
-    }
-    Some(atoms)
-}

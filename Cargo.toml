@@ -2,6 +2,11 @@
 name = "chizmo"
 version = "0.1.0"
 edition = "2021"
+keywords = ["chemistry"]
+categories = ["science", "mathematics"]
+license = "GPL-3.0-or-later"
+repository = "https://github.com/spectre007/chizmo"
+description = "Chemistry Gizmos - A toolbox for chemistry"
 
 [dependencies]
 periodic_table = "0.5.0"

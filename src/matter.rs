@@ -4,6 +4,7 @@ use std::collections::{HashMap, HashSet};
 
 use crate::constants::get_element;
 
+#[derive(Clone)]
 pub struct Atom {
     pub element: String,
     pub x: f64,
@@ -130,4 +131,19 @@ fn dfs(
             dfs(j, adjacency_matrix, visited, fragment);
         }
     }
+}
+
+pub fn get_fragments(atoms: &Vec<Atom>) -> Vec<Vec<Atom>> {
+    let frag_index_groups = get_fragment_indices(&atoms);
+    let mut fragments = Vec::new();
+
+    for frag_group in frag_index_groups {
+        let mut fragment = Vec::new();
+        for ifrag in frag_group {
+            fragment.push(atoms[ifrag].clone());
+        }
+        fragments.push(fragment);
+    }
+
+    fragments
 }

@@ -57,10 +57,6 @@ fn make_vdw_bond_table(atoms: &Vec<Atom>, scaling_factor: Option<f64>) -> HashMa
     let mut table: HashMap<String, f64> = HashMap::new();
     let unique_elements: HashSet<String> = atoms.iter().map(|a| a.element.clone()).collect();
 
-    for e in unique_elements.iter() {
-        println!("{}", e);
-    }
-
     let combinations: HashSet<_> = unique_elements
         .clone()
         .into_iter()

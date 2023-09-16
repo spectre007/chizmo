@@ -33,8 +33,8 @@ fn compute_distance_matrix(atoms: &Vec<Atom>) -> DMatrix<f64> {
 }
 
 fn vdw_distance(symbol_a: &str, symbol_b: &str, scaling_factor: Option<f64>) -> Option<f64> {
-    let a = get_element(&symbol_a).unwrap();
-    let b = get_element(&symbol_b).unwrap();
+    let a = get_element(symbol_a).unwrap();
+    let b = get_element(symbol_b).unwrap();
 
     let mut r: f64 = 0.0;
     if let Some(v) = a.van_del_waals_radius {
@@ -53,7 +53,7 @@ fn vdw_distance(symbol_a: &str, symbol_b: &str, scaling_factor: Option<f64>) -> 
     Some(r)
 }
 
-fn make_vdw_bond_table(atoms: &Vec<Atom>, scaling_factor: Option<f64>) -> HashMap<String, f64> {
+fn make_vdw_bond_table(atoms: &[Atom], scaling_factor: Option<f64>) -> HashMap<String, f64> {
     let mut table: HashMap<String, f64> = HashMap::new();
     let unique_elements: HashSet<String> = atoms.iter().map(|a| a.element.clone()).collect();
 
@@ -75,8 +75,8 @@ fn make_vdw_bond_table(atoms: &Vec<Atom>, scaling_factor: Option<f64>) -> HashMa
 fn get_adjacency_matrix(atoms: &Vec<Atom>) -> DMatrix<bool> {
     let n_atoms = atoms.len();
     let mut interact = DMatrix::from_element(n_atoms, n_atoms, false);
-    let distance = compute_distance_matrix(&atoms);
-    let vdw_table = make_vdw_bond_table(&atoms, Some(0.5));
+    let distance = compute_distance_matrix(atoms);
+    let vdw_table = make_vdw_bond_table(atoms, Some(0.5));
 
     for i in 0..n_atoms {
         let a = atoms[i].element.clone();
@@ -99,7 +99,7 @@ fn get_adjacency_matrix(atoms: &Vec<Atom>) -> DMatrix<bool> {
 
 pub fn get_fragment_indices(atoms: &Vec<Atom>) -> Vec<Vec<usize>> {
     let mut fragments = Vec::new();
-    let adj = get_adjacency_matrix(&atoms);
+    let adj = get_adjacency_matrix(atoms);
     let mut visited = vec![false; adj.nrows()];
 
     for i in 0..adj.nrows() {
@@ -130,7 +130,7 @@ fn dfs(
 }
 
 pub fn get_fragments(atoms: &Vec<Atom>) -> Vec<Vec<Atom>> {
-    let frag_index_groups = get_fragment_indices(&atoms);
+    let frag_index_groups = get_fragment_indices(atoms);
     let mut fragments = Vec::new();
 
     for frag_group in frag_index_groups {

@@ -1,8 +1,8 @@
-use std::fs;
-use pretty_assertions::{assert_eq};
 use chizmo::matter::get_fragments;
 use chizmo::matter::Atom;
 use chizmo::parse_xyz;
+use pretty_assertions::assert_eq;
+use std::fs;
 
 fn get_test_case(filename: &str) -> Vec<Atom> {
     let content = fs::read_to_string(filename).expect("Failed to read file!");
@@ -10,9 +10,11 @@ fn get_test_case(filename: &str) -> Vec<Atom> {
     atoms
 }
 
-macro_rules! test_case {($fname:expr) => (
-    concat!(env!("CARGO_MANIFEST_DIR"), "/tests/fixtures/", $fname)
-)}
+macro_rules! test_case {
+    ($fname:expr) => {
+        concat!(env!("CARGO_MANIFEST_DIR"), "/tests/fixtures/", $fname)
+    };
+}
 
 #[test]
 fn it_gives_fragments_case_1() {

@@ -1,8 +1,8 @@
+use chizmo::matter::get_fragments;
+use chizmo::matter::Atom;
+use chizmo::parse_xyz;
 use clap::Parser;
 use std::fs;
-use chizmo::parse_xyz;
-use chizmo::matter::Atom;
-use chizmo::matter::get_fragments;
 
 #[derive(Parser)]
 struct Cli {
@@ -19,8 +19,10 @@ fn main() {
     for frag in fragments {
         println!("---");
         for atom in frag {
-            println!("{:<2} {: >7.3} {: >7.3} {: >7.3}", atom.element, atom.x, atom.y, atom.z);
+            println!(
+                "{:<2} {: >7.3} {: >7.3} {: >7.3}",
+                atom.element, atom.x, atom.y, atom.z
+            );
         }
     }
 }
-

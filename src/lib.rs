@@ -5,7 +5,6 @@ use crate::matter::Atom;
 pub mod constants;
 pub mod matter;
 
-
 pub fn parse_xyz(content: &str) -> Option<Vec<Atom>> {
     let lines = content.lines();
 

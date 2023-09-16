@@ -6,6 +6,7 @@ keywords = ["chemistry"]
 categories = ["science", "mathematics"]
 license = "GPL-3.0-or-later"
 repository = "https://github.com/spectre007/chizmo"
+homepage = "https://github.com/spectre007/chizmo"
 description = "Chemistry Gizmos - A toolbox for chemistry"
 
 [dependencies]

@@ -38,10 +38,10 @@ fn vdw_distance(symbol_a: &str, symbol_b: &str, scaling_factor: Option<f64>) -> 
 
     match (vdw_a, vdw_b) {
         (Some(a), Some(b)) => {
-            let mut r: f64 = (a+b) as f64;
+            let mut r: f64 = (a + b) as f64;
             r *= scaling_factor.unwrap_or(1.0) * 1e-2; // Scale and convert to Angstrom
             Some(r)
-        },
+        }
         _ => None,
     }
 }

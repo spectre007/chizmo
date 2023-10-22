@@ -33,24 +33,17 @@ fn compute_distance_matrix(atoms: &Vec<Atom>) -> DMatrix<f64> {
 }
 
 fn vdw_distance(symbol_a: &str, symbol_b: &str, scaling_factor: Option<f64>) -> Option<f64> {
-    let a = get_element(symbol_a).unwrap();
-    let b = get_element(symbol_b).unwrap();
+    let vdw_a = get_element(symbol_a)?.van_del_waals_radius;
+    let vdw_b = get_element(symbol_b)?.van_del_waals_radius;
 
-    let mut r: f64 = 0.0;
-    if let Some(v) = a.van_del_waals_radius {
-        r += v as f64;
-    } else {
-        return None;
+    match (vdw_a, vdw_b) {
+        (Some(a), Some(b)) => {
+            let mut r: f64 = (a+b) as f64;
+            r *= scaling_factor.unwrap_or(1.0) * 1e-2; // Scale and convert to Angstrom
+            Some(r)
+        },
+        _ => None,
     }
-
-    if let Some(v) = b.van_del_waals_radius {
-        r += v as f64;
-    } else {
-        return None;
-    }
-
-    r *= scaling_factor.unwrap_or(1.0) * 1e-2; // Scale and convert to Angstrom
-    Some(r)
 }
 
 fn make_vdw_bond_table(atoms: &[Atom], scaling_factor: Option<f64>) -> HashMap<String, f64> {
